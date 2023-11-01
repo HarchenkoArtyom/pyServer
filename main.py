@@ -1,19 +1,12 @@
 import google.oauth2.credentials
-from OpenSSL import SSL
 from flask import Flask, request
 from google.oauth2 import id_token
 from google.auth.transport import requests
-import ssl
 app = Flask(__name__)
 
 
-private_key_path = 'key.pem'
-ssl_certificate_path = 'cert.pem'
-
-# Создайте контекст SSL
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-ssl_context.load_cert_chain(ssl_certificate_path, private_key_path)
-ssl_context.verify_mode = ssl.CERT_REQUIRED
+private_key_path = 'localhost.decrypted.key'
+ssl_certificate_path = 'localhost.crt'
 
 
 @app.route("/")
@@ -59,4 +52,4 @@ if __name__ == '__main__':
     email = id_info['email'] ssl_context=ssl_context,
     print(email)"""
     #context = ('cert3.pem', 'key3.pem')
-    app.run(ssl_context=('cert.pem', 'key.pem'), host='0.0.0.0', port=8080)
+    app.run(ssl_context=('localhost.crt', 'localhost.decrypted.key'), host='0.0.0.0', port=8080)
